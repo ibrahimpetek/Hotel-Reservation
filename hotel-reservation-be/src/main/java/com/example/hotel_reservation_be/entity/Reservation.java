@@ -76,7 +76,7 @@ public class Reservation extends BaseEntity {
 
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL,orphanRemoval =true,fetch = FetchType.LAZY )
     @Builder.Default
-    private List<ReservationGuest> guest =new ArrayList<>();
+    private List<ReservationGuest> guests =new ArrayList<>();
 
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     @Builder.Default

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.example.hotel_reservation_be.entity.Reservation;
 import com.example.hotel_reservation_be.enums.ReservationStatus;
 

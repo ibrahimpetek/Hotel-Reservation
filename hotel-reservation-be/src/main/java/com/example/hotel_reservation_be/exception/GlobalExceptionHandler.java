@@ -47,6 +47,7 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.FORBIDDEN, "Bu islem icin yetkiniz yok.", req, null);
     }
 
+    //validasyon hataları
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest req) {
         List<ErrorResponse.FieldErrorDetail> details = ex.getBindingResult().getFieldErrors().stream()

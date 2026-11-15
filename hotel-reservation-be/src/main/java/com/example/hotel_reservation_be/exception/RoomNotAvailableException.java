@@ -10,7 +10,7 @@ public class RoomNotAvailableException extends RuntimeException{
 
     public static RoomNotAvailableException forDate(String roomTypeName, LocalDate date) {
         return new RoomNotAvailableException(
-                roomTypeName + " oda tipi " + date + " tarihinde musait degil."
+                roomTypeName + " oda tipi " + date + " tarihinde müsait değil."
         );
     }
 }

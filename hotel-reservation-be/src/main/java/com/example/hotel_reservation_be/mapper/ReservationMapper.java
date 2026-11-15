@@ -25,5 +25,10 @@ public interface ReservationMapper {
     ReservationGuestDto toGuestDto(ReservationGuest guest);
 
     List<ReservationGuestDto> toGuestDtoList(List<ReservationGuest> guests);
+
+    @Mapping(target = "reservation", ignore = true)       // serviste set edilecek
+    ReservationGuest toReservationGuest(ReservationGuestDto dto);
+
+    List<ReservationGuest> toReservationGuestList(List<ReservationGuestDto> dtos);
     
 } 

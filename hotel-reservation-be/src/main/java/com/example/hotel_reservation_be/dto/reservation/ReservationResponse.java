@@ -13,7 +13,7 @@ import lombok.Setter;
 
 /**
  * Rezervasyon özeti 
- * ReservationResponse
+ 
  */
 @Getter 
 @Setter 
@@ -32,7 +32,7 @@ public class ReservationResponse {
     private Integer childCount;
     private BigDecimal totalPrice;
     private ReservationStatus status;
-    private String leadGuestFullName;
+    private String leadGuestFullName;  //ana misafir
     private String leadGuestEmail;
     private List<ReservationGuestDto> guests;
     

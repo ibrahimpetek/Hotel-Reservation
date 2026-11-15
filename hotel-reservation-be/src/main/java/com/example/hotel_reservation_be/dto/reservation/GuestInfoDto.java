@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Rezervasyonu yapan ana misafir
+ * GuestInfoDto
+ */
 @Getter 
 @Setter 
 public class GuestInfoDto {

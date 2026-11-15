@@ -34,6 +34,7 @@ public class AvailabilitySearchRequest {
     @PositiveOrZero(message = "Çocuk sayısı 0'dan küçük olamaz.")
     private int childCount=0;
 
+    /** Belirtilirse sadece bu oda tipi icin sonuc doner, belirtilmezse tum musait oda tipleri doner. */
     private Long roomTypeId;
     
 }

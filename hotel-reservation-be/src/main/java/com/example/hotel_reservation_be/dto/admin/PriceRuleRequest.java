@@ -32,12 +32,12 @@ public class PriceRuleRequest {
     @DecimalMin(value = "0.0",inclusive = false, message = "Yetişkin fiyatı 0'dan büyük olmalıdır.")
     private BigDecimal adultPrice;
 
+    @NotNull 
     @DecimalMin(value = "0.0", message = "Çocuk fiyatı negatif olamaz.")
     private BigDecimal childPrice;
 
+    @NotNull 
     @DecimalMin (value = "0.0", message = "Bebek fiyatı negatif olamaz.")
     private BigDecimal infantPrice;
 
-
-    
 }

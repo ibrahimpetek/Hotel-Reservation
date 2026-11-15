@@ -6,17 +6,17 @@ import java.time.LocalDate;
 import com.example.hotel_reservation_be.enums.BoardType;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter 
-@Setter 
+@Builder 
 @AllArgsConstructor 
 public class PriceRuleResponse {
 
     private Long id;
     private Long roomTypeId;
-    private String roomRoomTypeName;
+    private String roomTypeName;
     private BoardType boardType;
     private LocalDate startDate;
     private LocalDate endDate;

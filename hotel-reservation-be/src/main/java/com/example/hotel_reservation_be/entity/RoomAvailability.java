@@ -42,7 +42,7 @@ public class RoomAvailability extends BaseEntity{
     @Builder.Default
     private Integer bookedRooms=0;  //rezerve edilen oda sayısı
 
-    @Transient                         //metodun sonucunun veritabanında bir sütun olarak saklanmayacağını
+    @Transient                         //bu metodu db tablosunda arama,kaydetme veya yükleme.sadece işlem
     public int getAvailableRooms(){
         return totalRooms-bookedRooms;
     }

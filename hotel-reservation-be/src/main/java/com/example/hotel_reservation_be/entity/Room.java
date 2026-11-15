@@ -40,7 +40,7 @@ public class Room extends BaseEntity{
     private RoomStatus status=RoomStatus.AVAILABLE;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room-type_id",nullable = false)
-    private RoomType RoomType;
+    @JoinColumn(name = "room_type_id",nullable = false)
+    private RoomType roomType;
    
 }

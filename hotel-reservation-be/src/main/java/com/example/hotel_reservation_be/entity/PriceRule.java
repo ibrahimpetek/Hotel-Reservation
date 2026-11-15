@@ -38,7 +38,7 @@ public class PriceRule extends BaseEntity{
     private BoardType boardType;
 
     @Column(name = "start_date",nullable = false)
-    private LocalDate starDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date",nullable = false)
     private LocalDate endDate;

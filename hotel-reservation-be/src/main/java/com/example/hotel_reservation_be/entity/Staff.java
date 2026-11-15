@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name = "staff")
 public class Staff extends BaseEntity {
 
-    @Column(nullable = false,unique = true) //benzersiz
+    @Column(nullable = false,unique = true) 
     private String email;
 
     @Column(nullable = false)

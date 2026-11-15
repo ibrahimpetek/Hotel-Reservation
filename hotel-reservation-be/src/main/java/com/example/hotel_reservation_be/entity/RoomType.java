@@ -67,7 +67,7 @@ public class RoomType extends BaseEntity {
     private List<String>amenities=new ArrayList<>();
 
     //cascade ile başlayan oda tipi silinirse sisteme bağlı o fiziksel odalarda silinsin
-    @OneToMany(mappedBy = "room_type",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "roomType",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @Builder.Default
     private List<Room> rooms=new ArrayList<>();
 

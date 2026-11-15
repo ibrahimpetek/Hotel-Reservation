@@ -20,8 +20,8 @@ public interface PriceRuleMapper {
 
     List<PriceRuleResponse> toResponseList(List<PriceRule> rules);
 
-    @Mapping(target = "roomType", ignore = true)          // serviste set edilecek
-    @Mapping(target = "active", constant = "true")
+    @Mapping(target = "roomType", ignore = true)          // true görmezden gel 
+    @Mapping(target = "active", constant = "true")        // doğrudan true yaz 
     @Mapping(target = "childPrice", source = "childPrice", defaultValue = "0")
     @Mapping(target = "infantPrice", source = "infantPrice", defaultValue = "0")
     PriceRule toEntity(PriceRuleRequest request);

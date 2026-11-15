@@ -26,9 +26,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
- * Musaitlik sorgulama (arama ekrani) ve stok dusurme/artirma (rezervasyon
- * onay/iptal aninda) islemlerini yonetir.
- */
+ * Musaitlik sorgulama  ve stok dusurme/artirma */
 @Service
 @RequiredArgsConstructor
 public class AvailabilityService {

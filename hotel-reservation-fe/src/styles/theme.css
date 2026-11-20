@@ -1,0 +1,211 @@
+/* ---------- Marka renkleri ---------- */
+:root {
+  --brand-navy: #0f2438;
+  --brand-navy-dark: #081522;
+  --brand-gold: #c8a04e;
+  --brand-gold-light: #e4c777;
+  --brand-cream: #faf7f0;
+  --brand-gray: #6b7280;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-soft: 0 10px 30px rgba(15, 36, 56, 0.08);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--brand-navy);
+  background-color: #fff;
+}
+
+.navbar-brand-text {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--brand-navy) !important;
+}
+
+.btn-brand {
+  background-color: var(--brand-navy);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.btn-brand:hover {
+  background-color: var(--brand-navy-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn-brand:disabled {
+  opacity: 0.6;
+  transform: none;
+}
+
+.btn-outline-brand {
+  border: 1.5px solid var(--brand-navy);
+  color: var(--brand-navy);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  background: transparent;
+}
+.btn-outline-brand:hover {
+  background-color: var(--brand-navy);
+  color: #fff;
+}
+
+.text-gold {
+  color: var(--brand-gold);
+}
+
+.bg-cream {
+  background-color: var(--brand-cream);
+}
+
+.card-soft {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- Hero / Ana sayfa ---------- */
+.hero-section {
+  position: relative;
+  min-height: 62vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(8, 21, 34, 0.55) 0%, rgba(8, 21, 34, 0.75) 100%),
+    url("https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
+  color: #fff;
+}
+
+.hero-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Sabit Arama Widget'i ---------- */
+.search-widget {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  padding: 1.5rem;
+  margin-top: -70px;
+  position: relative;
+  z-index: 10;
+}
+
+.search-widget label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand-gray);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.guest-selector-popover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 1rem;
+  width: 260px;
+}
+
+.counter-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brand-navy);
+  background: #fff;
+  color: var(--brand-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1;
+}
+.counter-btn:disabled {
+  opacity: 0.35;
+}
+
+/* ---------- Oda / Konsept Kartlari ---------- */
+.room-card-img {
+  height: 230px;
+  object-fit: cover;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.badge-not-available {
+  background-color: #f2f2f2;
+  color: var(--brand-gray);
+}
+
+/* ---------- Pansiyon secim kartlari ---------- */
+.board-option-card {
+  border: 2px solid #e5e7eb;
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+}
+.board-option-card:hover {
+  border-color: var(--brand-gold-light);
+}
+.board-option-card.selected {
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px rgba(200, 160, 78, 0.18);
+}
+
+/* ---------- Ozet Kutusu (sticky sidebar) ---------- */
+.summary-box {
+  position: sticky;
+  top: 90px;
+}
+
+.summary-divider {
+  border-top: 1px dashed #d8dce1;
+  margin: 0.85rem 0;
+}
+
+/* ---------- Onay Ekrani ---------- */
+.confirmation-check {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #e9f7ef;
+  color: #1e8e4d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+
+/* ---------- Footer ---------- */
+.footer-dark {
+  background-color: var(--brand-navy-dark);
+  color: #cbd5e1;
+}
+.footer-dark a {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+.footer-dark a:hover {
+  color: var(--brand-gold-light);
+}
+
+@media (max-width: 767.98px) {
+  .search-widget {
+    margin-top: -40px;
+  }
+}

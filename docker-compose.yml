@@ -45,7 +45,7 @@ services:
       context: ./hotel-reservation-fe
       dockerfile: Dockerfile
       args:
-        REACT_APP_API_BASE_URL: /api
+        REACT_APP_API_BASE_URL: /
     container_name: hotel_frontend
     ports:
       - "${FRONTEND_PORT:-3000}:80"

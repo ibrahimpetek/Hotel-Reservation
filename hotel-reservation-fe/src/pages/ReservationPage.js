@@ -40,7 +40,7 @@ export default function ReservationPage() {
 
   useEffect(() => {
     if (!checkIn || !checkOut) {
-      setError("Once ana sayfadan tarih secimi yapmalisiniz.");
+      setError("Önce ana sayfadan tarih seçimi yapmalısınız.");
       setLoading(false);
       return;
     }
@@ -50,7 +50,7 @@ export default function ReservationPage() {
       .then((results) => {
         const match = results[0];
         if (!match || !match.available) {
-          setError("Bu oda tipi secilen tarihlerde artik musait degil.");
+          setError("Bu oda tipi seçilen tarihlerde artık müsait değil.");
           return;
         }
         setSearchResult(match);
@@ -60,16 +60,14 @@ export default function ReservationPage() {
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-    
   }, [roomTypeId, checkIn, checkOut, adultCount, childCount]);
 
-  
   useEffect(() => {
     setGuests((prev) => {
       const next = [...prev];
       while (next.length < totalGuestCount) {
         const isChildSlot = next.length >= adultCount;
-        next.push({ firstName: "", lastName: "", age: isChildSlot ? 8 : 30, child: isChildSlot });
+        next.push({ firstName: "", lastName: "", age: "", child: isChildSlot });
       }
       return next.slice(0, totalGuestCount);
     });
@@ -95,7 +93,7 @@ export default function ReservationPage() {
     setError("");
 
     if (!selectedBoardType) {
-      setError("Lutfen bir pansiyon tipi secin.");
+      setError("Lütfen bir pansiyon tipi seçin.");
       return;
     }
     if (!leadGuest.firstName || !leadGuest.lastName || !leadGuest.email || !leadGuest.phone) {
@@ -107,6 +105,11 @@ export default function ReservationPage() {
       return;
     }
 
+    const preparedGuests = guests.map((g) => ({
+      ...g,
+      age: g.age === "" || g.age === null ? (g.child ? 8 : 30) : Number(g.age),
+    }));
+
     setSubmitting(true);
     try {
       const reservation = await createReservation({
@@ -117,7 +120,7 @@ export default function ReservationPage() {
         adultCount,
         childCount,
         leadGuest,
-        guests,
+        guests: preparedGuests,
         specialRequests,
       });
 
@@ -245,11 +248,11 @@ export default function ReservationPage() {
             {/* Odada kalacak misafirler */}
             <h5 className="fw-bold mb-3">Odada Kalacak Misafirler</h5>
             {guests.map((guest, index) => (
-              <div className="row g-3 mb-2" key={index}>
+              <div className="row g-3 mb-2 align-items-center" key={index}>
                 <div className="col-md-5">
                   <input
                     className="form-control"
-                    placeholder={`${index + 1}. Misafir - Ad`}
+                    placeholder={`${index + 1}. ${guest.child ? "Çocuk" : "Yetişkin"} - Ad`}
                     value={guest.firstName}
                     onChange={(e) => updateGuestField(index, "firstName", e.target.value)}
                     required
@@ -268,18 +271,24 @@ export default function ReservationPage() {
                   <input
                     type="number"
                     className="form-control"
-                    placeholder="Yas"
+                    placeholder="Yaş"
                     min={0}
                     max={120}
                     value={guest.age}
-                    onChange={(e) => updateGuestField(index, "age", Number(e.target.value))}
+                    onChange={(e) =>
+                      updateGuestField(
+                        index,
+                        "age",
+                        e.target.value === "" ? "" : Number(e.target.value)
+                      )
+                    }
                   />
                 </div>
               </div>
             ))}
 
             <div className="mt-4">
-              <label className="form-label small fw-semibold">Ozel Istekler (opsiyonel)</label>
+              <label className="form-label small fw-semibold">Özel İstekler (opsiyonel)</label>
               <textarea
                 className="form-control"
                 rows={3}
@@ -304,7 +313,7 @@ export default function ReservationPage() {
 
               <p className="mb-1 small text-muted mt-2">Misafirler</p>
               <p className="fw-semibold">
-                {adultCount} Yetişkin{childCount > 0 ? `, ${childCount} Cocuk` : ""}
+                {adultCount} Yetişkin{childCount > 0 ? `, ${childCount} Çocuk` : ""}
               </p>
 
               <div className="summary-divider" />
@@ -323,7 +332,7 @@ export default function ReservationPage() {
 
               {selectedOption && (
                 <div className="mt-3">
-                  <p className="small text-muted mb-2">Taksit Seçenekleri (bilgi amaclidir)</p>
+                  <p className="small text-muted mb-2">Taksit Seçenekleri (bilgi amaçlıdır)</p>
                   <ul className="list-unstyled small mb-0">
                     {installmentOptions(selectedOption.totalPrice).map((opt) => (
                       <li key={opt.count} className="d-flex justify-content-between py-1">
@@ -338,7 +347,7 @@ export default function ReservationPage() {
               {error && <p className="text-danger small mt-3 mb-0">{error}</p>}
 
               <button type="submit" className="btn btn-brand w-100 mt-4" disabled={submitting}>
-                {submitting ? "İsleniyor..." : "Rezervasyon Yap"}
+                {submitting ? "İşleniyor..." : "Rezervasyon Yap"}
               </button>
             </div>
           </div>

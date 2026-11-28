@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "127.0.0.1:${DB_PORT:-5432}:5432"   # sadece bu makineden erisilir (DBeaver/pgAdmin icin)
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -34,13 +34,24 @@ services:
       IYZICO_SECRET_KEY: ${IYZICO_SECRET_KEY}
       IYZICO_BASE_URL: ${IYZICO_BASE_URL:-https://sandbox-api.iyzipay.com}
     ports:
-      - "${BACKEND_PORT:-8090}:8080"        # dogrudan API testi icin (Postman/curl)
+      - "${BACKEND_PORT:-8090}:8080"
     depends_on:
       db:
         condition: service_healthy
     restart: unless-stopped
 
-
+  frontend:
+    build:
+      context: ./hotel-reservation-fe
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: /api
+    container_name: hotel_frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 volumes:
   postgres_data:

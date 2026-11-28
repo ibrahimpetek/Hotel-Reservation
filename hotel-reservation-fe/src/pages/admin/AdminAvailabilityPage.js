@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { fetchRoomTypes } from "../../api/hotelApi";
@@ -32,24 +33,34 @@ export default function AdminAvailabilityPage() {
     });
   }, []);
 
-  const loadView = () => {
+  const loadView = (range = viewRange) => {
     if (!selectedRoomTypeId) return;
+    if (range.endDate < range.startDate) {
+      setViewError("Bitiş tarihi başlangıç tarihinden önce olamaz.");
+      return;
+    }
     setLoading(true);
     setViewError("");
-    fetchAvailabilityRange(selectedRoomTypeId, viewRange.startDate, viewRange.endDate)
+    fetchAvailabilityRange(selectedRoomTypeId, range.startDate, range.endDate)
       .then(setDays)
       .catch((err) => setViewError(err.message))
       .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    loadView();
-  }, [selectedRoomTypeId]);
+    loadView(viewRange);
+  }, [selectedRoomTypeId, viewRange]);
 
   const handleBulkSubmit = async (e) => {
     e.preventDefault();
     setBulkError("");
     setBulkSuccess("");
+
+    if (bulkForm.endDate < bulkForm.startDate) {
+      setBulkError("Bitiş tarihi başlangıç tarihinden önce olamaz.");
+      return;
+    }
+
     setSaving(true);
 
     try {
@@ -60,7 +71,7 @@ export default function AdminAvailabilityPage() {
         totalRooms: Number(bulkForm.totalRooms),
       });
       setBulkSuccess("Stok başarıyla güncellendi.");
-      loadView();
+      loadView(viewRange);
     } catch (err) {
       setBulkError(err.message);
     } finally {
@@ -90,7 +101,7 @@ export default function AdminAvailabilityPage() {
           <div className="card card-soft p-4">
             <h5 className="fw-bold mb-3">Toplu Stok Tanımla</h5>
             <p className="text-muted small">
-              Seçilen tarih aralığındaki HER güne, girilen toplam oda sayısını yazar.
+              Seçilen tarih aralığındaki her güne, girilen toplam oda sayısını yazar.
               Mevcut rezervasyonlar (dolu oda sayısı) korunur.
             </p>
             <form onSubmit={handleBulkSubmit}>
@@ -161,7 +172,7 @@ export default function AdminAvailabilityPage() {
                 />
               </div>
               <div className="col-2 d-flex align-items-end">
-                <button className="btn btn-outline-brand btn-sm w-100" onClick={loadView}>
+                <button className="btn btn-outline-brand btn-sm w-100" onClick={() => loadView(viewRange)}>
                   Getir
                 </button>
               </div>

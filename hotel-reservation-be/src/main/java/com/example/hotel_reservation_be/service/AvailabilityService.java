@@ -24,9 +24,11 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Musaitlik sorgulama  ve stok dusurme/artirma */
+ * Musaitlik sorgulama ve stok dusurme/artirma
+ */
 @Service
 @RequiredArgsConstructor
 public class AvailabilityService {
@@ -44,15 +46,20 @@ public class AvailabilityService {
      */
     @Transactional(readOnly = true)
     public List<AvailabilitySearchResponse> search(AvailabilitySearchRequest request) {
-        List<RoomType> roomTypes = request.getRoomTypeId() != null
-                ? List.of(roomTypeRepository.findById(request.getRoomTypeId())
-                        .orElseThrow(() -> new IllegalArgumentException("Oda tipi bulunamadi")))
-                : roomTypeRepository.findByActiveTrueAndDeletedFalse();
+        List<RoomType> roomTypes;
+        if (request.getRoomTypeId() != null) {
+            RoomType rt = roomTypeRepository.findById(request.getRoomTypeId())
+                    .orElseThrow(() -> new IllegalArgumentException("Oda tipi bulunamadi"));
+            roomTypes = (rt.isActive() && !rt.isDeleted()) ? List.of(rt) : List.of();
+        } else {
+            roomTypes = roomTypeRepository.findByActiveTrueAndDeletedFalse();
+        }
 
         int nights = (int) ChronoUnit.DAYS.between(request.getCheckIn(), request.getCheckOut());
 
         return roomTypes.stream()
-                .filter(rt -> rt.getMaxAdult() + rt.getMaxChild() >= request.getAdultCount() + request.getChildCount())
+                .filter(rt -> rt.getMaxAdult() >= request.getAdultCount()
+                        && (rt.getMaxAdult() + rt.getMaxChild()) >= (request.getAdultCount() + request.getChildCount()))
                 .map(rt -> buildSearchResponse(rt, request, nights))
                 .toList();
     }
@@ -96,7 +103,7 @@ public class AvailabilityService {
                             .pricePerNight(perNight)
                             .build();
                 })
-                .filter(java.util.Objects::nonNull)
+                .filter(Objects::nonNull)
                 .toList();
     }
 
@@ -166,6 +173,10 @@ public class AvailabilityService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Oda tipi bulunamadi: " + request.getRoomTypeId()));
 
+        if (!roomType.isActive() || roomType.isDeleted()) {
+            throw new BadRequestException("Pasif veya silinmis oda tipine stok tanimlanamaz.");
+        }
+
         LocalDate date = request.getStartDate();
         while (!date.isAfter(request.getEndDate())) {
             LocalDate currentDate = date;
@@ -176,6 +187,15 @@ public class AvailabilityService {
                             .totalRooms(0)
                             .bookedRooms(0)
                             .build());
+
+            if (request.getTotalRooms() < ra.getBookedRooms()) {
+                throw new BadRequestException(
+                        currentDate + " tarihinde " + ra.getBookedRooms()
+                                + " adet mevcut rezervasyon bulundugu icin stok "
+                                + ra.getBookedRooms() + "'in altina dusurulemez."
+                );
+            }
+
             ra.setTotalRooms(request.getTotalRooms());
             availabilityRepository.save(ra);
 

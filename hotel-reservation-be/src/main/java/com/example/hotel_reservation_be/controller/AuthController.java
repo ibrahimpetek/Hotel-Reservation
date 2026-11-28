@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RestController 
-@RequestMapping 
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor 
 public class AuthController {
 

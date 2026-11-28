@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:9090";
+// NOT (paket): axios -> `npm install axios`
+// CRA'da env degiskenleri import.meta.env DEGIL process.env ile okunur
+// ve mutlaka "REACT_APP_" prefix'i tasimalidir (bkz. .env.example).
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8090";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -9,8 +12,9 @@ const apiClient = axios.create({
   },
 });
 
-
-
+// Admin/resepsiyon panelindeki her istege, giris yapilmissa JWT token'i
+// otomatik ekler. Token AuthContext tarafindan localStorage'a yazilir
+// (bkz. src/context/AuthContext.jsx, anahtar: "hotel_staff_token").
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("hotel_staff_token");
   if (token) {
@@ -19,8 +23,9 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-
-
+// Backend'den donen ErrorResponse formatini ({message, fieldErrors, ...})
+// tek tip bir Error nesnesine cevirir, boylece component'lerde tutarli
+// sekilde catch(err) { err.message } kullanilabilir.
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {

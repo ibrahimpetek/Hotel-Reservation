@@ -1,14 +1,14 @@
-# =BUILD =
+# = BUILD =
 FROM node:22-alpine AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm install --legacy-peer-deps --no-audit --no-fund
 
 COPY public ./public
 COPY src ./src
 
-ARG REACT_APP_API_BASE_URL=/
+ARG REACT_APP_API_BASE_URL=/api
 ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
 RUN npm run build
 

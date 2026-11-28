@@ -69,8 +69,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="restaurant" className="bg-cream py-5">
-        <div className="container row align-items-center g-4">
+      <section
+        id="restaurant"
+        className="bg-cream"
+        style={{
+          scrollMarginTop: "96px",
+          paddingTop: "4.5rem",
+          paddingBottom: "18rem",
+        }}
+      >
+        <div className="container row align-items-center g-4 mx-auto">
           <div className="col-lg-6">
             <img
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80"
@@ -90,8 +98,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="beach" className="py-5">
-        <div className="container row align-items-center g-4 flex-lg-row-reverse">
+      <section
+        id="beach"
+        style={{
+          scrollMarginTop: "96px",
+          paddingTop: "4.5rem",
+          paddingBottom: "18rem",
+        }}
+      >
+        <div className="container row align-items-center g-4 flex-lg-row-reverse mx-auto">
           <div className="col-lg-6">
             <img
               src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1000&q=80"

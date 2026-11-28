@@ -1,6 +1,34 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/" && hash) {
+      const targetId = hash.replace("#", "");
+      const timer = setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 60);
+
+      return () => clearTimeout(timer);
+    }
+  }, [pathname, hash]);
+
+  const handleSectionClick = (e, sectionId) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.history.replaceState(null, "", `/#${sectionId}`);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
       <div className="container">
@@ -25,14 +53,22 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="#restaurant" className="nav-link fw-semibold">
+              <Link
+                to="/#restaurant"
+                className="nav-link fw-semibold"
+                onClick={(e) => handleSectionClick(e, "restaurant")}
+              >
                 Restoran
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a href="#beach" className="nav-link fw-semibold">
+              <Link
+                to="/#beach"
+                className="nav-link fw-semibold"
+                onClick={(e) => handleSectionClick(e, "beach")}
+              >
                 Plaj &amp; Havuzlar
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <Link to="/rooms" className="btn btn-brand btn-sm ms-lg-2">

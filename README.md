@@ -56,13 +56,13 @@ $env:DB_USERNAME="postgres"
 $env:DB_PASSWORD="<.env içindeki şifre>"
 .\gradlew bootRun
 
-API http://localhost:8080 adresinde açılır.
+API http://localhost:8090 adresinde açılır.
 
 4. Frontend'i çalıştır
 
 hotel-reservation-fe klasöründe .env.local adlı bir dosya oluştur:
 
-REACT_APP_API_BASE_URL=http://localhost:8080
+REACT_APP_API_BASE_URL=http://localhost:8090
 
 Ardından:
 
